@@ -28,3 +28,7 @@ data:
       relabel_configs:
         - source_labels: ['__syslog_message_hostname']
           target_label: 'host'          
+kind: ConfigMap
+metadata:
+  name: loki-configmap
+  namespace: default
