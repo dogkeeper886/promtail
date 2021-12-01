@@ -1,16 +1,30 @@
 apiVersion: v1
 data:
-  config.yml: "server:\r\n  http_listen_port: 9080\r\n  grpc_listen_port: 0\r\n\r\npositions:\r\n
-    \ filename: /tmp/positions.yaml\r\n\r\nclients:\r\n  - url: http://loki:3100/loki/api/v1/push\r\n\r\nscrape_configs:\r\n-
-    job_name: system\r\n  static_configs:\r\n  - targets:\r\n      - localhost\r\n
-    \   labels:\r\n      job: varlogs\r\n      __path__: /var/log/*log\r\n      \r\n
-    \ - job_name: syslog\r\n    syslog:\r\n      listen_address: 0.0.0.0:1514\r\n
-    \     labels:\r\n        job: \"syslog\"\r\n    relabel_configs:\r\n      - source_labels:
-    ['__syslog_message_hostname']\r\n        target_label: 'host'\r\n\r\n"
-kind: ConfigMap
-metadata:
-  creationTimestamp: "2021-12-01T06:24:52Z"
-  name: promtail-configmap
-  namespace: default
-  resourceVersion: "11661615"
-  uid: 6b55cccd-fe89-463f-aa2b-71c37e85e060
+  config.yml: |
+    server:
+      http_listen_port: 9080
+      grpc_listen_port: 0
+
+    positions:
+      filename: /tmp/positions.yaml
+
+    clients:
+      - url: http://loki:3100/loki/api/v1/push
+
+    scrape_configs:
+    - job_name: system
+      static_configs:
+      - targets:
+          - localhost
+        labels:
+          job: varlogs
+          __path__: /var/log/*logkind: ConfigMap
+
+    - job_name: syslog
+      syslog:
+        listen_address: 0.0.0.0:1514
+        labels:
+          job: "syslog"
+      relabel_configs:
+        - source_labels: ['__syslog_message_hostname']
+          target_label: 'host'          
